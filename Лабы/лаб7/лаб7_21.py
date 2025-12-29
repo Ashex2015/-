@@ -168,6 +168,114 @@ def date(date):
     return False
 
 
+def variable (num):
+  num= num.strip()
+  variable1= [r"(^\D)",
+             r'(?!pi|e|ln2|ln10|sqrt2|sin)\b\w*\b\s*\b'
+             ]
+  for patter in variable1:
+     match = re.findall(patter,num)
+     matchh=''
+     for i in match:
+         matchh +=i
+     if len(match)> 0 and len(num)==len(matchh):
+       k=True
+     else:
+        k=False
+  return k
+
+
+
+def number(num):
+    
+  number1= [r"([+*/-])"]
+  fun = ''
+  num= num.strip()
+
+  for patter in number1:
+      match = re.findall(patter,num)
+      if len(match) == 0:
+          fun=True
+      else:
+        if match[0] == '-' or match[0]=='+':
+            fun = False
+        else:
+            fun = True
+  if fun == True:
+      number1= [r"([0-9])"]
+      for patter in number1:
+          match = re.findall(patter, num)
+  else:
+      fun=False
+  return fun
+
+
+
+def operator(num):
+    
+  num= num.strip()
+  operator1= [r'[\\^*/+-]'
+             ]
+
+  for patter in operator1:
+      match = re.findall(patter,num)
+      if len(match) != 0 :
+          return True
+      else:
+         return False
+
+
+
+def right_parenthesis (num):
+  num= num.strip()
+  right_parenthesis1= [r'\(',
+             ]
+
+  for patter in right_parenthesis1:
+      match = re.findall(patter,num)
+      if len(match) != 0 :
+          return True
+      else:
+         return False
+
+def left_parenthesis(num):
+   
+  num= num.strip()
+  left_parenthesis1= [r'\)',
+             ]
+
+  for patter in left_parenthesis1:
+      match = re.findall(patter,num)
+      if len(match) != 0 :
+          return True
+      else:
+         return False
+def function (num):
+  num= num.strip()
+  function1= [
+             r'(sin|cos|tg|ctg|tan|cot|sinh|cosh|th|cth|tanh|coth|ln|lg|log|exp|sqrt|cbrt|abs|sign)']
+  for patter in function1:
+     match = re.findall(patter,num)
+     if len(match)!= 0:
+       k=True
+     else:
+        k=False
+  return k
+
+
+
+def constant (num):
+  num= num.strip()
+  function1= [
+             r'(pi|e|sqrt2|ln2|ln10)']
+  for patter in function1:
+     match = re.findall(patter,num)
+     if len(match)!= 0:
+       k=True
+     else:
+        k=False
+  return k
+
 
 
 while True:
@@ -175,6 +283,7 @@ while True:
     '1. Формат даты\n' 
     '2. Цвета\n' 
     '3. Пароль\n' \
+    '4. Токенизация математического выражения\n'\
     'Введите число: '))
 
     if s == 1:
@@ -198,7 +307,21 @@ while True:
         if date(s)==True:
             print('Пароль прошел проверку')
             break
-        else:
-            print('Пароль не прошел проверку')
-            break
+    if s == 4:
+
+        num = input('Введите токен: ')
+        if operator(num) == True:
+           print(r'Type: operator')
+        if variable(num) == True:
+           print(r'Type: variable')
+        if number(num) == True:
+           print(r'Type: number')
+        if left_parenthesis(num) == True:
+           print(r'Type: left_parenthesis')
+        if right_parenthesis(num) == True:
+           print(r'Type: right_parenthesis')
+        if function(num) == True:
+           print(r'Type: function ')
+        if constant(num) == True:
+           print(r'Type: constant ')
     
